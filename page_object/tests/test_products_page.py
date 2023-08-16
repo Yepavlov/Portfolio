@@ -3,22 +3,22 @@ from page_object.pages.products_page import Products
 
 def test_check_sorting_a_z(logged_in_main_page):
     products_page = Products(logged_in_main_page.driver)
-    products_page.click_dropdown_sorting_a_z()
+    products_page.verify_dropdown_sorting_a_z()
 
 
 def test_check_sorting_z_a(logged_in_main_page):
     products_page = Products(logged_in_main_page.driver)
-    products_page.click_dropdown_sorting_z_a()
+    products_page.verify_dropdown_sorting_z_a()
 
 
 def test_check_sorting_low_to_high(logged_in_main_page):
     products_page = Products(logged_in_main_page.driver)
-    products_page.click_dropdown_sorting_low_to_high()
+    products_page.verify_dropdown_sorting_low_to_high()
 
 
 def test_check_sorting_high_to_low(logged_in_main_page):
     products_page = Products(logged_in_main_page.driver)
-    products_page.click_dropdown_sorting_high_to_low()
+    products_page.verify_dropdown_sorting_high_to_low()
 
 
 def test_click_product(logged_in_main_page):

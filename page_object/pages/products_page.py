@@ -22,7 +22,7 @@ class Products(BasePage):
 
     URL = "https://www.saucedemo.com/inventory.html"
 
-    def click_dropdown_sorting_a_z(self):
+    def verify_dropdown_sorting_a_z(self):
         dropdown = self.find(self.DROPDOWN)
         select = Select(dropdown)
         select.select_by_visible_text("Name (A to Z)")
@@ -37,7 +37,7 @@ class Products(BasePage):
         sorted_name = sorted(product_name)
         assert sorted_name == product_name, "A-Z sorting is incorrect"
 
-    def click_dropdown_sorting_z_a(self):
+    def verify_dropdown_sorting_z_a(self):
         dropdown = self.find(self.DROPDOWN)
         select = Select(dropdown)
         select.select_by_visible_text("Name (Z to A)")
@@ -52,7 +52,7 @@ class Products(BasePage):
         sorted_name = sorted(product_name, reverse=True)
         assert sorted_name == product_name, "Z-A sorting is incorrect"
 
-    def click_dropdown_sorting_low_to_high(self):
+    def verify_dropdown_sorting_low_to_high(self):
         dropdown = self.find(self.DROPDOWN)
         select = Select(dropdown)
         select.select_by_value("lohi")
@@ -63,7 +63,7 @@ class Products(BasePage):
         sorted_list = sorted(prices_list)
         assert sorted_list == prices_list, "Price (low to high) sorting is incorrect"
 
-    def click_dropdown_sorting_high_to_low(self):
+    def verify_dropdown_sorting_high_to_low(self):
         dropdown = self.find(self.DROPDOWN)
         select = Select(dropdown)
         select.select_by_value("hilo")
