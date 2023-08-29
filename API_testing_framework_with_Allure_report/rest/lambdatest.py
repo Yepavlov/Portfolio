@@ -22,8 +22,7 @@ class LambdaTestService:
         allure.attach(response, "Output XML", allure.attachment_type.XML)
         return response
 
-    allure.step("Send a POST request to minify XML")
-
+    @allure.step("Send a POST request to minify XML")
     def minify_xml(self, input_str: str) -> str:
         response = self._send_request("minify-xml", "input-str", input_str).json()[
             "minify_data"
@@ -32,8 +31,7 @@ class LambdaTestService:
         allure.attach(response, "Output minify XML", allure.attachment_type.XML)
         return response
 
-    allure.step("Send a POST request to extract text to JSON")
-
+    @allure.step("Send a POST request to extract text to JSON")
     def extract_text_from_json(self, input_str: str) -> str:
         response = self._send_request(
             "extract-text-json", "input-str", input_str
@@ -42,8 +40,7 @@ class LambdaTestService:
         allure.attach(response, "Extracted TEXT", allure.attachment_type.TEXT)
         return response
 
-    allure.step("Send a POST request to Yaml validator")
-
+    @allure.step("Send a POST request to Yaml validator")
     def yaml_validator(self, input_str: str) -> str:
         response = self._send_request("yaml-validator", "yaml-str", input_str).json()[
             "message"
@@ -52,8 +49,7 @@ class LambdaTestService:
         allure.attach(response, "Output answer", allure.attachment_type.TEXT)
         return response
 
-    allure.step("Send a POST request to convert JSON to YAML")
-
+    @allure.step("Send a POST request to convert JSON to YAML")
     def convert_json_to_yaml(self, input_str: str) -> str:
         response = self._send_request("json-to-yaml", "json-str", input_str).json()[
             "data"
@@ -71,8 +67,7 @@ class LambdaTestService:
         allure.attach(response, "Output YAML", allure.attachment_type.YAML)
         return response
 
-    allure.step("Send a POST request to convert YAML to JSON")
-
+    @allure.step("Send a POST request to convert YAML to JSON")
     def convert_yaml_to_json(self, input_str: str) -> str:
         response = self._send_request("yaml-to-json", "yaml-str", input_str).json()
         response_data = response.get("data")
