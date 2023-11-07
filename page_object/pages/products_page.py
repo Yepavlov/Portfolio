@@ -1,26 +1,12 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-from page_object.pages.base_page import BasePage
+from pages.base_page import BasePage
+from pages.Locators import LocatorsProducts
 
 
-class Products(BasePage):
-    """
-    name of product xpath = ["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
-                            "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)"]
-    name of product css = ["sauce-labs-backpack", "sauce-labs-bike-light", "sauce-labs-bolt-t-shirt",
-                            "sauce-labs-fleece-jacket", "sauce-labs-onesie", "test\.allthethings\(\)-t-shirt-\(red\)"]
-    """
+class Products(BasePage, LocatorsProducts):
 
-    PRODUCTS_TEMPLATE = "//*[contains(text(), '{}')]"
-    ADD_TO_CART_TEMPLATE = "button#add-to-cart-{}"
-    REMOVE_TEMPLATE = "button#remove-{}"
-
-    DROPDOWN = (By.CSS_SELECTOR, "select.product_sort_container")
-
-    DIV_PRICE = (By.CSS_SELECTOR, "div.inventory_item_price")
-
-    URL = "https://www.saucedemo.com/inventory.html"
 
     def verify_dropdown_sorting_a_z(self):
         dropdown = self.find(self.DROPDOWN)

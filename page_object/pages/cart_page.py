@@ -1,22 +1,11 @@
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
-from page_object.pages.base_page import BasePage
+from pages.base_page import BasePage
+from pages.Locators import LocatorsCartPage
 
 
-class CartPage(BasePage):
-    NAME_GOODS_IN_CARD_PATH = "//div[text()='{name}']"
-
-    BUTTON_REMOVE = "button#remove-{name}"
-
-    BUTTON_CHECKOUT = (By.CSS_SELECTOR, "button#checkout")
-    FIELD_FIRST_NAME = (By.CSS_SELECTOR, "input#first-name")
-    FIELD_LAST_NAME = (By.CSS_SELECTOR, "input#last-name")
-    FIELD_POSTAL_CODE = (By.CSS_SELECTOR, "input#postal-code")
-    BUTTON_CONTINUE = (By.CSS_SELECTOR, "input#continue")
-    DIV_CHECKOUT_OVERVIEW = (By.CSS_SELECTOR, "span.title")
-    DIV_TOTAL_COST = (By.CSS_SELECTOR, "div.summary_info_label.summary_total_label")
-    DIV_ITEM_PRICE = (By.CSS_SELECTOR, "div.inventory_item_price")
+class CartPage(BasePage, LocatorsCartPage):
 
     def check_added_goods(self, names_to_check):
         for name in names_to_check:
