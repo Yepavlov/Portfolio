@@ -1,7 +1,8 @@
 import pytest as pytest
 from selenium import webdriver
 
-from page_object.pages.base_page import BasePage
+from pages.base_page import BasePage
+from pages.login_page import LoginPage
 
 
 @pytest.fixture
@@ -24,7 +25,7 @@ def password():
 
 @pytest.fixture()
 def logged_in_main_page(driver, username, password):
-    main_page = BasePage(driver)
+    main_page = LoginPage(driver)
     main_page.enter_username(username)
     main_page.enter_password(password)
     main_page.click_login_button()

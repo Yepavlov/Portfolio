@@ -1,4 +1,4 @@
-from page_object.pages.products_page import Products
+from pages.products_page import Products
 
 
 def test_check_sorting_a_z(logged_in_main_page):

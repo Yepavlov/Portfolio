@@ -1,5 +1,6 @@
-from page_object.pages.cart_page import CartPage
-from page_object.pages.products_page import Products
+
+from pages.cart_page import CartPage
+from pages.products_page import Products
 
 
 def test_check_added_goods_from_the_page_goods(logged_in_main_page):
