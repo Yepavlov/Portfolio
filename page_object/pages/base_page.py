@@ -32,3 +32,7 @@ class BasePage(LocatorsLoginPage):
 
     def wait_for_clickable(self, locator):
         return self._wait.until((EC.element_to_be_clickable(locator)))
+
+    def check_current_url(self, expected_url):
+        current_url = self.driver.current_url
+        assert current_url == expected_url, f"Expected URL: {expected_url}, Actual URL: {current_url}"

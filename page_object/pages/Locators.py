@@ -37,6 +37,10 @@ class LocatorsCartPage:
     DIV_CHECKOUT_OVERVIEW = (By.CSS_SELECTOR, "span.title")
     DIV_TOTAL_COST = (By.CSS_SELECTOR, "div.summary_info_label.summary_total_label")
     DIV_ITEM_PRICE = (By.CSS_SELECTOR, "div.inventory_item_price")
+    VALIDATION_ERROR_MESSAGE = (By.CSS_SELECTOR, "h3[data-test='error']")
+    BUTTON_FINISH = (By.CSS_SELECTOR, "button[data-test='finish']")
+    INFORMATION_ORDER_IS_DISPATCHED = (By.CSS_SELECTOR, "div.complete-text")
+    BUTTON_BACK_HOME = (By.CSS_SELECTOR, "button#back-to-products")
 
 
 class LocatorsProducts:
