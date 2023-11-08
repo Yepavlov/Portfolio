@@ -36,6 +36,24 @@ class CartPage(BasePage, LocatorsCartPage):
         self.find(self.BUTTON_CONTINUE).click()
         assert "Checkout: Overview" in self.find(self.DIV_CHECKOUT_OVERVIEW).text
 
+    def fill_in_your_information_without_name_field(self, last_name, postal_code):
+        self.find(self.FIELD_LAST_NAME).send_keys(last_name)
+        self.find(self.FIELD_POSTAL_CODE).send_keys(postal_code)
+        self.find(self.BUTTON_CONTINUE).click()
+        assert "Error: First Name is required" in self.find(self.VALIDATION_ERROR_MESSAGE).text
+
+    def fill_in_your_information_without_last_name_field(self, name, postal_code):
+        self.find(self.FIELD_FIRST_NAME).send_keys(name)
+        self.find(self.FIELD_POSTAL_CODE).send_keys(postal_code)
+        self.find(self.BUTTON_CONTINUE).click()
+        assert "Error: Last Name is required" in self.find(self.VALIDATION_ERROR_MESSAGE).text
+
+    def fill_in_your_information_without_postal_code_field(self, name, last_name):
+        self.find(self.FIELD_FIRST_NAME).send_keys(name)
+        self.find(self.FIELD_LAST_NAME).send_keys(last_name)
+        self.find(self.BUTTON_CONTINUE).click()
+        assert "Error: Postal Code is required" in self.find(self.VALIDATION_ERROR_MESSAGE).text
+
     def check_the_correct_total(self):
         prices_list = []
         prices = self.find_all(self.DIV_ITEM_PRICE)
@@ -49,3 +67,14 @@ class CartPage(BasePage, LocatorsCartPage):
         tax_amount = sum(prices_list) * tax_percentage
         expected_total = sum(prices_list) + tax_amount
         assert actual_total_price == round(expected_total, 2), "Incorrect total price"
+
+    def check_click_button_finish(self):
+        self.find(self.BUTTON_FINISH).click()
+        assert "Your order has been dispatched, " \
+               "and will arrive just as fast " \
+               "as the pony can get there!" in self.find(self.INFORMATION_ORDER_IS_DISPATCHED).text
+
+
+    def check_click_button_back_home(self, expected_url):
+        self.find(self.BUTTON_BACK_HOME).click()
+        self.check_current_url(expected_url)
