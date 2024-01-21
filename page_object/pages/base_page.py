@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pages.Locators import LocatorsLoginPage
+from page_object.pages.Locators import LocatorsLoginPage
 
 
 class BasePage(LocatorsLoginPage):

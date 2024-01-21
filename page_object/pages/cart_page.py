@@ -1,8 +1,8 @@
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
-from pages.base_page import BasePage
-from pages.Locators import LocatorsCartPage
+from page_object.pages.base_page import BasePage
+from page_object.pages.Locators import LocatorsCartPage
 
 
 class CartPage(BasePage, LocatorsCartPage):

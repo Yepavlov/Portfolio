@@ -24,6 +24,7 @@ class LocatorsLoginPage:
         "//*[contains(text(), 'Epic sadface: Password is required')]",
     )
 
+
 class LocatorsCartPage:
     NAME_GOODS_IN_CARD_PATH = "//div[text()='{name}']"
 
