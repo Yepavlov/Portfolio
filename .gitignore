@@ -12,3 +12,4 @@ env/
 
 # Ignore log files
 *.log
+.env
