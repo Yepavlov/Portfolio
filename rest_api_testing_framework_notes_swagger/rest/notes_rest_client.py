@@ -1,9 +1,11 @@
-from rest_api_testing_framework.rest.rest_client import RestClient
+from rest_api_testing_framework_notes_swagger.rest.base_rest_client import (
+    BaseRestClient,
+)
 
 
-class NotesRest(RestClient):
+class NotesRestClient(BaseRestClient):
     """
-    Notes API service
+    Notes REST API service
     """
 
     BASE_URL = "https://practice.expandtesting.com/notes/api/"
@@ -13,28 +15,29 @@ class NotesRest(RestClient):
     def _headers(self):
         return {"x-auth-token": self._token}
 
-    def get_health_check(self):
+    def get_health_check(self, expected_status_code=200):
         """
         Send a GET request to /health-check
+        :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info("Sending cheking-health request")
-        response = self._get("health-check")
+        self._log.info(f"Sending request to check if the server is running and healthy")
+        response = self._get("health-check", expected_status_code=expected_status_code)
         return response
 
-    def post_users_register(self, name, email, password, expected_status_code=201):
+    def post_users_register(self, user_name, email, password, expected_status_code=201):
         """
         Send a POST request to /users/register
-        :param name: name
+        :param user_name: user_name
         :param email: email
         :param password: password
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info(f"Register in as {name}")
+        self._log.info(f"Register new user as {user_name}")
         response = self._post(
             "users/register",
-            json={"name": name, "email": email, "password": password},
+            json={"name": user_name, "email": email, "password": password},
             expected_status_code=expected_status_code,
         )
         return response
@@ -47,7 +50,7 @@ class NotesRest(RestClient):
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info(f"Register in as {email}")
+        self._log.info(f"Login on the website as a {email}")
         response = self._post(
             "users/login",
             json={"email": email, "password": password},
@@ -63,52 +66,72 @@ class NotesRest(RestClient):
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info("Getting user profile")
+        self._log.info("Get a user profile")
         response = self._get("users/profile", expected_status_code=expected_status_code)
         return response
 
+    def delete_users_delete_account(self, expected_status_code=200):
+        """
+        Send a DELETE request to /users/delete-account
+        :param expected_status_code: expected status code
+        :return: response in JSON format
+        """
+        self._log.info("Delete a user's account")
+        response = self._delete(
+            "users/delete-account", expected_status_code=expected_status_code
+        )
+        return response
+
     def patch_users_profile(
-        self, name=None, phone=None, company=None, expected_status_code=200
+        self,
+        user_name=None,
+        user_phone=None,
+        user_company=None,
+        expected_status_code=200,
     ):
         """
         Send a PATCH request to /users/profile
-        :param name: name
-        :param phone: phone
-        :param company: company
+        :param user_name: user_name
+        :param user_phone: user_phone
+        :param user_company: company
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info("update user info")
+        self._log.info(
+            f"Update the user's information such as: {user_name}, {user_phone}, {user_company}"
+        )
         response = self._patch(
             "users/profile",
-            data={"name": name, "phone": phone, "company": company},
+            data={"name": user_name, "phone": user_phone, "company": user_company},
             expected_status_code=expected_status_code,
         )
         return response
 
-    def post_users_forgot_password(self, email, expected_status_code=200):
+    def post_users_forgot_password(self, user_email=None, expected_status_code=200):
         """
         Send a POST request to /users/forgot-password
-        :param email: email
+        :param user_email: user_email
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info("user forgot password")
+        self._log.info(f"User: {user_email} forgot password")
         response = self._post(
             "users/forgot-password",
-            data={"email": email},
+            data={"email": user_email},
             expected_status_code=expected_status_code,
         )
         return response
 
-    def post_verify_reset_password_token(self, token, expected_status_code=200):
+    def post_users_verify_reset_password_token(
+        self, token=None, expected_status_code=200
+    ):
         """
         Send a POST request to /users/verify-reset-password-token
         :param token: token
         :param expected_status_code: expected status code
         :return: response in JSON format
         """
-        self._log.info("verify reset password token")
+        self._log.info(f"Verify that the provided password reset {token}")
         response = self._post(
             "users/verify-reset-password-token",
             data={"token": token},
@@ -142,7 +165,9 @@ class NotesRest(RestClient):
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("change user password")
+        self._log.info(
+            "Change a user's password by providing the user's current password and the new password."
+        )
         response = self._post(
             "users/change-password",
             data={"currentPassword": password, "newPassword": new_password},
@@ -156,24 +181,14 @@ class NotesRest(RestClient):
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("user logout")
+        self._log.info(
+            "Log out the currently authenticated user by invalidating their token."
+        )
         response = self._delete(
             "users/logout", expected_status_code=expected_status_code
         )
         if response["status"] == 200:
             self._token = None
-        return response
-
-    def delete_users_delete_users_account(self, expected_status_code=200):
-        """
-        Send a DELETE request to /users/delete-account
-        :param expected_status_code: expected_status_code
-        :return: response in JSON format
-        """
-        self._log.info("delete a user's account")
-        response = self._delete(
-            "users/delete-account", expected_status_code=expected_status_code
-        )
         return response
 
     def post_notes(
@@ -187,7 +202,9 @@ class NotesRest(RestClient):
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("post notes")
+        self._log.info(
+            f"Creates a new note with the given {title}, {description}, {category}"
+        )
         response = self._post(
             "notes",
             data={"title": title, "description": description, "category": category},
@@ -195,30 +212,30 @@ class NotesRest(RestClient):
         )
         return response
 
-    def get_all_notes(self, expected_status_code=200):
+    def get_notes(self, expected_status_code=200):
         """
         Send a GET request to /notes
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("receive a list of notes")
+        self._log.info("Retrieve a list of notes for the authenticated user")
         response = self._get("notes", expected_status_code=expected_status_code)
         return response
 
-    def get_notes_by_id(self, _id, expected_status_code=200):
+    def get_notes_by_id(self, _id=None, expected_status_code=200):
         """
-        Send a GET request to /notes/{id}
+        Send a GET request to /notes/{_id}
         :param _id: id
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("receive a note by id")
+        self._log.info(f"Retrieve a note by its {_id}")
         response = self._get(f"notes/{_id}", expected_status_code=expected_status_code)
         return response
 
     def put_notes_by_id(
         self,
-        _id,
+        _id=None,
         title=None,
         description=None,
         status=None,
@@ -235,9 +252,7 @@ class NotesRest(RestClient):
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info(
-            "Creates a new note with the given title, description, category and user id"
-        )
+        self._log.info("Update an existing note by its id")
         response = self._put(
             f"notes/{_id}",
             data={
@@ -250,7 +265,7 @@ class NotesRest(RestClient):
         )
         return response
 
-    def patch_notes_by_id(self, _id, status=None, expected_status_code=200):
+    def patch_notes_by_id(self, _id=None, status=None, expected_status_code=200):
         """
         Send a PATCH request to /notes/{id}
         :param _id: id
@@ -258,9 +273,7 @@ class NotesRest(RestClient):
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info(
-            "Update the completed attribute of the note with the specified id"
-        )
+        self._log.info("Update the complete status of a note by id")
         response = self._patch(
             f"notes/{_id}",
             data={"completed": status},
@@ -268,14 +281,14 @@ class NotesRest(RestClient):
         )
         return response
 
-    def delete_notes_by_id(self, _id, expected_status_code=200):
+    def delete_notes_by_id(self, _id=None, expected_status_code=200):
         """
         Send a DELETE request to /notes/{id}
         :param _id: id
         :param expected_status_code: expected_status_code
         :return: response in JSON format
         """
-        self._log.info("Deletes a note with the specified ID")
+        self._log.info("Delete a note by id")
         response = self._delete(
             f"notes/{_id}", expected_status_code=expected_status_code
         )

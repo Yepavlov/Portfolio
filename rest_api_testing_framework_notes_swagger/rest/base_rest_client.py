@@ -1,11 +1,10 @@
+import requests
 from logging import getLogger
 
-import requests
 
-
-class RestClient:
+class BaseRestClient:
     """
-    Base class with the logic for REST API
+    Base class with the logic for the REST API
     """
 
     BASE_URL: str
@@ -26,7 +25,7 @@ class RestClient:
         """
         url = self.BASE_URL + path
         headers = headers or self._headers
-        self._log.info(f"Get request to {url} with params: {params}")
+        self._log.info(f"Send GET request to {url} with params: {params}")
         response = requests.get(url, params, headers=headers, **kwargs)
         assert response.status_code == expected_status_code
         return response.json()
@@ -52,7 +51,7 @@ class RestClient:
         """
         url = self.BASE_URL + path
         headers = headers or self._headers
-        self._log.info(f"POST request to {url} with data: {data} and json: {json}")
+        self._log.info(f"Send POST request to {url} with data: {data} and json: {json}")
         response = requests.post(url, data, json, headers=headers, **kwargs)
         assert response.status_code == expected_status_code
         return response.json()
@@ -68,7 +67,7 @@ class RestClient:
         """
         url = self.BASE_URL + path
         headers = headers or self._headers
-        self._log.info(f"DELETE request to {url}")
+        self._log.info(f"Send DELETE request to {url}")
         response = requests.delete(url, headers=headers, **kwargs)
         assert response.status_code == expected_status_code
         return response.json()
@@ -85,7 +84,7 @@ class RestClient:
         """
         url = self.BASE_URL + path
         headers = headers or self._headers
-        self._log.info(f"PATCH request to {url} with data: {data}")
+        self._log.info(f"Send PATCH request to {url} with data: {data}")
         response = requests.patch(url, data, headers=headers, **kwargs)
         assert response.status_code == expected_status_code
         return response.json()
@@ -102,7 +101,7 @@ class RestClient:
         """
         url = self.BASE_URL + path
         headers = headers or self._headers
-        self._log.info(f"Put request to {url} with data: {data}")
+        self._log.info(f"Send PUT request to {url} with data: {data}")
         response = requests.put(url, data, headers=headers, **kwargs)
         assert response.status_code == expected_status_code
         return response.json()
