@@ -1,5 +1,5 @@
 import pytest
-from utils.json_utils import json_file_to_country, json_file_to_countries
+from API_testing_framework_advanced_level.utils.json_utils import json_file_to_country, json_file_to_countries
 import allure
 
 
@@ -27,6 +27,7 @@ def test_country_by_name(countries_service, country_name, expected_response_file
 
     with allure.step("Compare expected and actual result."):
         assert actual_country == expected_country
+
 
 @allure.suite("Countries API tests")
 @allure.title("Test Get country by code")
@@ -70,6 +71,7 @@ def test_countries_by_codes(countries_service, country_codes):
     with allure.step("Compare expected and actual result."):
         for country in expected_countries:
             assert country in actual_countries
+
 
 @allure.suite("Countries API tests")
 @allure.title("Test Get countries by currency")

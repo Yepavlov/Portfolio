@@ -1,6 +1,8 @@
 from typing import List
 from typing import Any
 from dataclasses import dataclass, field
+
+
 @dataclass
 class Ara:
     official: str
@@ -12,6 +14,7 @@ class Ara:
         _common = str(obj.get("common"))
         return Ara(_official, _common)
 
+
 @dataclass
 class CapitalInfo:
     latlng: List[float]
@@ -20,6 +23,7 @@ class CapitalInfo:
     def from_dict(obj: Any) -> 'CapitalInfo':
         _latlng = obj.get("latlng")
         return CapitalInfo(_latlng)
+
 
 @dataclass
 class Car:
@@ -31,6 +35,7 @@ class Car:
         _signs = obj.get("signs")
         _side = str(obj.get("side"))
         return Car(_signs, _side)
+
 
 @dataclass
 class CoatOfArms:
@@ -56,6 +61,7 @@ class Flags:
         _svg = str(obj.get("svg"))
         _alt = str(obj.get("alt"))
         return Flags(_png, _svg, _alt)
+
 
 @dataclass
 class Fra:
@@ -92,6 +98,7 @@ class Maps:
         _openStreetMaps = str(obj.get("openStreetMaps"))
         return Maps(_googleMaps, _openStreetMaps)
 
+
 @dataclass
 class Name:
     common: str
@@ -116,6 +123,7 @@ class PostalCode:
         _format = str(obj.get("format"))
         _regex = str(obj.get("regex"))
         return PostalCode(_format, _regex)
+
 
 @dataclass
 class Country:
@@ -192,6 +200,7 @@ class Country:
         _startOfWeek = str(obj.get("startOfWeek"))
         _capitalInfo = CapitalInfo.from_dict(obj.get("capitalInfo", {}))
         _postalCode = PostalCode.from_dict(obj.get("postalCode", {}))
-        return Country(_name, _tld, _cca2, _ccn3, _cca3, _cioc, _independent, _status, _unMember, _currencies, _idd, _capital, _altSpellings, _region, _subregion, _languages, _translations, _latlng, _landlocked, _borders, _area, _demonyms, _flag, _maps, _population, _gini, _fifa, _car, _timezones, _continents, _flags, _coatOfArms, _startOfWeek, _capitalInfo, _postalCode)
-
-
+        return Country(_name, _tld, _cca2, _ccn3, _cca3, _cioc, _independent, _status, _unMember, _currencies, _idd,
+                       _capital, _altSpellings, _region, _subregion, _languages, _translations, _latlng, _landlocked,
+                       _borders, _area, _demonyms, _flag, _maps, _population, _gini, _fifa, _car, _timezones,
+                       _continents, _flags, _coatOfArms, _startOfWeek, _capitalInfo, _postalCode)
