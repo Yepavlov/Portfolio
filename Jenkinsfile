@@ -26,7 +26,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    bat "python -m pytest Portfolio\\API_testing_framework_advanced_level\\"
+                    bat "python -m pytest Portfolio\\API_testing_framework_advanced_level\\tests\\tests.py"
                 }
             }
         }
