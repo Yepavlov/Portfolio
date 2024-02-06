@@ -9,6 +9,13 @@ pipeline {
                 }
             }
         }
+        stage("Set path") {
+            steps {
+                script {
+                    env.PATH = "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\;${env.PATH}"
+                }
+            }
+        }
         stage("Create environment") {
             steps {
                 script {
