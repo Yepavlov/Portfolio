@@ -23,6 +23,13 @@ pipeline {
                 }
             }
         }
+        stage("Update pip") {
+            steps {
+                script {
+                    bat "python -m pip install --upgrade pip"
+                }
+            }
+        }
         stage("Testing") {
             steps {
                 script {
