@@ -5,7 +5,7 @@ pipeline {
         stage("Clone repository") {
             steps {
                 script {
-                    git branch: "main", url: "https://github.com/Yepavlov/Portfolio/API_testing_framework_advanced_level.git"
+                    git branch: "main", url: "https://github.com/Yepavlov/Portfolio.git"
                 }
             }
         }
