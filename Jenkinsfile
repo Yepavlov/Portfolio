@@ -33,9 +33,14 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    bat "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\"
+                    bat "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\ --junitxml=junit_test_result.xml"
                 }
             }
+        }
+    }
+    post {
+        always {
+            junit "junit_test_result.xml"
         }
     }
 }
