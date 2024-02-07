@@ -15,22 +15,22 @@ logger = getLogger(__name__)
 
 @pytest.fixture(scope="session")
 def user_name_notes():
-    return os.getenv("USER'S_NAME_NOTES")
+    return os.getenv("USERS_NAME_NOTES")
 
 
 @pytest.fixture(scope="session")
 def email_address_notes():
-    return os.getenv("USER'S_EMAIL_ADDRESS_NOTES")
+    return os.getenv("USERS_EMAIL_ADDRESS_NOTES")
 
 
 @pytest.fixture(scope="session")
 def password_notes():
-    return os.getenv("USER'S_PASSWORD_NOTES")
+    return os.getenv("USERS_PASSWORD_NOTES")
 
 
 @pytest.fixture(scope="session")
 def new_password_notes():
-    return os.getenv("NEW_USER'S_PASSWORD_NOTES")
+    return os.getenv("NEW_USERS_PASSWORD_NOTES")
 
 
 @pytest.fixture
