@@ -33,7 +33,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    bat "python -m pytest"
+                    bat "python -m pytest API_testing_framework_advanced_level\\tests\\tests.py"
                 }
             }
         }
