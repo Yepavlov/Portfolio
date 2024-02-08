@@ -1,0 +1,23 @@
+#Use Python 3.10 official image as the base image
+FROM python:3.10
+
+
+
+#Copy the content of the current directory (.) on the host machine to the '/app' directory inside the Docker image
+COPY . /app
+
+
+
+#Set the working directory inside the Docker image to '/app'
+#All subsequent RUN, CMD, ADD and COPY instructions will use '/app' as the starting point
+WORKDIR /app
+
+
+#Upgrade pip (Python package installer) to the latest version
+RUN python -m pip install --upgrade pip
+
+
+#Install the Python packages listed in the 'requirements.txt' file
+RUN pip install -r requirement.txt
+
+

@@ -16,6 +16,13 @@ pipeline {
                 }
             }
         }
+        stage("Prepare environment") {
+            steps{
+                script{
+                    dockerImage = docker.build('my_app')
+                }
+            }
+        }
         stage("Set path") {
             steps {
                 script {
@@ -30,17 +37,12 @@ pipeline {
                 }
             }
         }
-        stage("Update pip") {
-            steps {
-                script {
-                    bat "python -m pip install --upgrade pip"
-                }
-            }
-        }
         stage("Testing") {
             steps {
                 script {
-                    bat "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\ --junitxml=junit_test_result.xml"
+                    def run_args = "--rm -v %cd%:/app -w /app"
+                    def test_cmd = "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\"
+                    bat "docker run ${run_args} my_app ${test_cmd} --junitxml=junit_test_result.xml"
                 }
             }
         }
