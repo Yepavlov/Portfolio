@@ -1,41 +1,42 @@
 pipeline {
     agent any
-    environment {
-        USERS_NAME_NOTES=credentials("name")
-        USERS_EMAIL_ADDRESS_NOTES=credentials("email")
-        USERS_PASSWORD_NOTES=credentials("password")
-        NEW_USERS_PASSWORD_NOTES=credentials("new_password")
-
-    }
 
     stages {
-        stage("Clone repository") {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Yepavlov/Portfolio.git'
+            }
+        }
+
+        stage('Prepare Environment') {
             steps {
                 script {
-                    git branch: "main", url: "https://github.com/Yepavlov/Portfolio.git"
+                    dockerImage = docker.build('my-app')
                 }
             }
         }
-        stage("Prepare environment") {
+
+        stage('Run Tests') {
             steps {
                 script {
-                    dockerImage = docker.build('my_app')
-                }
-            }
-        }
-        stage("Testing") {
-            steps {
-                script {
-                    def run_args = "--rm -v %cd%:/app -w /app"
-                    def test_cmd = "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\"
-                    bat "docker run ${run_args} my_app ${test_cmd} --junitxml=junit_test_result.xml"
+                    // Define a variable 'runArgs' for the Docker run arguments.
+                    // '--rm': Remove the container after it exits.
+                    // '-v %cd%:/app': Mount the current Jenkins workspace (%cd%) into the '/app' directory in the container.
+                    // '-w /app': Set the working directory inside the container to /app.
+                    def runArgs = "--rm -v %cd%:/app -w /app"
+
+                    def testCmd = "python -m pytest API_testing_framework_with_Allure_report\\tests\\ --alluredir=allure-results"
+
+                    // Run the Docker container with the specified arguments and command.
+                    bat "docker run ${runArgs} my-app ${testCmd}"
                 }
             }
         }
     }
+
     post {
         always {
-            junit "junit_test_result.xml"
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
 }
