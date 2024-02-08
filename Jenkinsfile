@@ -23,26 +23,19 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
+        stage("Testing") {
             steps {
                 script {
-                    // Define a variable 'runArgs' for the Docker run arguments.
-                    // '--rm': Remove the container after it exits.
-                    // '-v %cd%:/app': Mount the current Jenkins workspace (%cd%) into the '/app' directory in the container.
-                    // '-w /app': Set the working directory inside the container to /app.
-                    def runArgs = "--rm -v %cd%:/app -w /app"
-
-                    def testCmd = "python -m pytest --alluredir=allure-results"
-
-                    // Run the Docker container with the specified arguments and command.
-                    bat "docker run ${runArgs} my-app ${testCmd}"
+                    def run_args = "--rm -v %cd%:/app -w /app"
+                    def test_cmd = "python -m pytest rest_api_testing_framework_notes_swagger\\tests\\"
+                    bat "docker run ${run_args} my_app ${test_cmd} --junitxml=junit_test_result.xml"
                 }
             }
         }
     }
     post {
         always {
-            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            junit "junit_test_result.xml"
         }
     }
 }
